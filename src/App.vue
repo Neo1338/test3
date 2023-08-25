@@ -1,0 +1,92 @@
+<script setup lang="ts">
+  import { onMounted } from 'vue';
+  import { useMainStore } from './stores/index';
+
+  const store = useMainStore();
+
+  onMounted(() => {
+    store.readFromLocal();
+  });
+</script>
+
+<template>
+  <ConfirmPopup
+    v-if="store.popup.visible"
+    :popText="store.popup.text"
+    :confirm="store.popup.confirm"
+    :cancel="store.popup.cancel"
+  />
+  <header>
+    <div class="wrapper">
+      <nav>
+        <RouterLink to="/">История</RouterLink>
+        <RouterLink to="/add">Добавить / изменить</RouterLink>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
+</template>
+
+<style scoped>
+  header {
+    line-height: 1.5;
+    max-height: 100vh;
+  }
+
+  .logo {
+    display: block;
+    margin: 0 auto 2rem;
+  }
+
+  nav {
+    width: 100%;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  nav a.router-link-exact-active {
+    color: var(--color-text);
+  }
+
+  nav a.router-link-exact-active:hover {
+    background-color: transparent;
+  }
+
+  nav a {
+    display: inline-block;
+    padding: 0 1rem;
+    border-left: 1px solid var(--color-border);
+  }
+
+  nav a:first-of-type {
+    border: 0;
+  }
+
+  @media (min-width: 1024px) {
+    header {
+      display: flex;
+      place-items: center;
+      padding-right: calc(var(--section-gap) / 2);
+    }
+
+    .logo {
+      margin: 0 2rem 0 0;
+    }
+
+    header .wrapper {
+      display: flex;
+      place-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    nav {
+      text-align: left;
+      margin-left: -1rem;
+      font-size: 1.5rem;
+
+      padding: 1rem 0;
+      margin-top: 1rem;
+    }
+  }
+</style>
